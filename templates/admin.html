@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="nav">
+    <h2>⚙ Admin Panel</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/dashboard">Analytics</a>
+    </div>
+</div>
+
+<div class="container">
+
+<h2>Add New Item</h2>
+
+<form method="POST" action="/add">
+    <input type="text" name="name" placeholder="Item Name" required>
+    <input type="text" name="price" placeholder="Price" required>
+    <input type="text" name="uid" placeholder="RFID UID" required>
+    <input type="number" name="quantity" placeholder="Quantity" required>
+    <button class="btn">Add Item</button>
+</form>
+
+<h2>Inventory</h2>
+
+<table>
+<tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>UID</th>
+    <th>Stock</th>
+    <th>Actions</th>
+</tr>
+
+{% for item in items %}
+<tr>
+<form method="POST" action="/update/{{ item.id }}">
+    <td><input type="text" name="name" value="{{ item.name }}"></td>
+    <td><input type="text" name="price" value="{{ item.price }}"></td>
+    <td>{{ item.uid }}</td>
+    <td><input type="number" name="quantity" value="{{ item.quantity }}"></td>
+    <td>
+        <button class="btn-small">Update</button>
+        <a href="/delete/{{ item.id }}" class="btn-small red">Delete</a>
+    </td>
+</form>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

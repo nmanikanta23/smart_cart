@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="nav">
+    <h2>📊 Analytics Dashboard</h2>
+    <a href="/admin">Back</a>
+</div>
+
+<div class="container">
+
+    <!-- Buttons -->
+    <div style="margin-bottom:20px;">
+        <button class="btn" onclick="loadChart('daily')">Daily</button>
+        <button class="btn" onclick="loadChart('weekly')">Weekly</button>
+        <button class="btn" onclick="loadChart('monthly')">Monthly</button>
+        <button class="btn" onclick="loadChart('yearly')">Yearly</button>
+    </div>
+
+    <!-- Chart Box -->
+    <div class="chart-box">
+        <canvas id="chart"></canvas>
+    </div>
+
+</div>
+
+<script>
+let myChart = null;   // 🔥 important
+
+function loadChart(mode){
+    fetch('/stats/' + mode)
+    .then(res => res.json())
+    .then(data => {
+
+        console.log(mode, data);
+
+        // ❌ Destroy old chart
+        if(myChart){
+            myChart.destroy();
+        }
+
+        // ✅ Create new chart
+        myChart = new Chart(document.getElementById("chart"), {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: mode.toUpperCase() + " SALES",
+                    data: data.values,
+                    backgroundColor: '#4CAF50',   // green
+                    borderColor: '#2E7D32',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "#000"
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: "#000"
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: "#000"
+                        }
+                    }
+                }
+            }
+        });
+
+    });
+}
+
+// Load default
+loadChart('daily');
+</script>
+
+</body>
+</html>

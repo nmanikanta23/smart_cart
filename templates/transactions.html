@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="nav">
+    <h2>📜 Transactions</h2>
+    <a href="/admin">Back</a>
+</div>
+
+<div class="container">
+
+<table>
+<tr>
+    <th>Item</th>
+    <th>Qty</th>
+    <th>Total</th>
+    <th>Date</th>
+</tr>
+
+{% for t in data %}
+<tr>
+    <td>{{ t.item_name }}</td>
+    <td>{{ t.qty }}</td>
+    <td>{{ t.total }}</td>
+    <td>{{ t.date }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

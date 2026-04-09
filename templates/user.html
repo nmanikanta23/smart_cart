@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Cart</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="nav">
+    <h2>🛒 Smart Cart</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/user">Refresh</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Your Shopping Cart</h1>
+
+    {% if cart %}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+
+        {% for item, data in cart.items() %}
+        <tr>
+            <td>{{ item }}</td>
+
+            <td>
+                <!-- ➕ Increase -->
+                <a class="btn-small" href="/increase/{{ item }}">+</a>
+
+                <b>{{ data.qty }}</b>
+
+                <!-- ➖ Decrease -->
+                <a class="btn-small red" href="/decrease/{{ item }}">-</a>
+            </td>
+
+            <td>₹ {{ data.price * data.qty }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Total: ₹ {{ total }}</h2>
+
+    <a href="/pay" class="btn">Pay Now</a>
+
+    {% else %}
+        <h2>Your cart is empty 🛒</h2>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
